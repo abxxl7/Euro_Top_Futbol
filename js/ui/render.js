@@ -11,7 +11,7 @@ const listaFavoritos = document.querySelector("#lista-favoritos");
 const coleccionVacio = document.querySelector("#coleccion-vacio");
 
 // Funcion que muestra u oculta el spinner de carga
-export function mostrarCarga(mostrar) {
+export function mostrarCargando(mostrar) {
     estadoCarga?.classList.toggle("oculto", !mostrar);
 }
 
@@ -42,7 +42,7 @@ export function renderGrilla(equipos, onSeleccionar) {
     equipos.forEach((equipo) => fragmento.appendChild(crearTarjetaEquipo(equipo)));
     grilla.appendChild(fragmento);
 
-    grilla.onclick = (event) => {
+    grilla.onclick = (evento) => {
         const tarjeta = evento.target.closest(".tarjeta-equipo");
         if (!tarjeta) return;
         onSeleccionar(tarjeta.dataset.id);
@@ -119,7 +119,7 @@ export function renderFavoritos(favoritos, callbacks) {
 
 function crearFilaFavorito(favorito, callbacks) {
     const fila = document.createElement("article");
-    fila.className = "fila-favorito";
+    fila.className = "favorito";
 
     const img = document.createElement("img");
     img.className = "favorito__escudo";
@@ -165,7 +165,7 @@ function crearSelectorCalificacion(favorito, callbacks) {
     }
     
     // Los botones que se crean, hay que convertirlos a svg
-    window.Lucide?.createIcons({ root: contenedor });
+    window.lucide?.createIcons({ root: contenedor });
 
     return contenedor;
 }

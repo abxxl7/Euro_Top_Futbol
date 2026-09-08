@@ -1,0 +1,474 @@
+/* ---------- Variables de tema (modo claro por defecto) ---------- */
+:root {
+    --color-fondo: #f4f6f8;
+    --color-superficie: #ffffff;
+    --color-texto: #1c1f26;
+    --color-texto-suave: #5a6270;
+    --color-borde: #e0e3e8;
+    --color-primario: #1e7a4d;
+    --color-primario-hover: #17603c;
+    --color-peligro: #c0392b;
+    --color-peligro-hover: #9c2d21;
+    --color-exito: #1e7a4d;
+    --color-error: #c0392b;
+    --sombra: 0 2px 10px rgba(0, 0, 0, 0.08);
+    --radio: 10px;
+}
+
+/* Paleta de modo oscuro: se activa con classList.toggle sobre <body> */
+body.modo-oscuro {
+    --color-fondo: #14161a;
+    --color-superficie: #1e2126;
+    --color-texto: #eef1f5;
+    --color-texto-suave: #a3a9b3;
+    --color-borde: #2c3038;
+    --sombra: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.oculto {
+    display: none !important;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* ---------- Cabecera ---------- */
+.cabecera {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-superficie);
+    border-bottom: 1px solid var(--color-borde);
+}
+
+.cabecera__marca h1 {
+    margin: 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.icono-marca {
+    width: 22px;
+    height: 22px;
+    color: var(--color-primario);
+}
+
+.cabecera__marca p {
+    margin: 0.15rem 0 0;
+    color: var(--color-texto-suave);
+    font-size: 0.9rem;
+}
+
+/* ---------- Contenedor general ---------- */
+.contenedor {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* ---------- Controles: buscador y filtro ---------- */
+.controles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-busqueda,
+.select-liga {
+    padding: 0.6rem 0.9rem;
+    border-radius: var(--radio);
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-superficie);
+    color: var(--color-texto);
+    font-size: 0.95rem;
+}
+
+.input-busqueda {
+    flex: 1 1 260px;
+}
+
+.select-liga {
+    flex: 1 1 200px;
+}
+
+/* ---------- Botones ---------- */
+.boton {
+    cursor: pointer;
+    border: none;
+    border-radius: var(--radio);
+    padding: 0.5rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.boton--icono {
+    background: transparent;
+    border: 1px solid var(--color-borde);
+    line-height: 1;
+    padding: 0.4rem 0.6rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.icono-modo {
+    width: 20px;
+    height: 20px;
+    color: var(--color-texto);
+}
+
+.boton--primario {
+    background-color: var(--color-primario);
+    color: #fff;
+}
+
+.boton--primario:hover {
+    background-color: var(--color-primario-hover);
+}
+
+.boton--secundario {
+    background-color: var(--color-borde);
+    color: var(--color-texto);
+}
+
+.boton--peligro {
+    background-color: var(--color-peligro);
+    color: #fff;
+}
+
+.boton--peligro:hover {
+    background-color: var(--color-peligro-hover);
+}
+
+/* ---------- Estados: carga / error / vacio ---------- */
+.estado-carga {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 2rem 0;
+    color: var(--color-texto-suave);
+}
+
+.spinner {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 4px solid var(--color-borde);
+    border-top-color: var(--color-primario);
+    animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.estado-error {
+    background-color: rgba(192, 57, 43, 0.1);
+    border: 1px solid var(--color-error);
+    color: var(--color-error);
+    padding: 0.9rem 1rem;
+    border-radius: var(--radio);
+    margin-bottom: 1.5rem;
+}
+
+.estado-vacio {
+    text-align: center;
+    color: var(--color-texto-suave);
+    padding: 1.5rem 0;
+}
+
+/* ---------- Grilla de equipos ---------- */
+.grilla-equipos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.tarjeta-equipo {
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: var(--sombra);
+    transition: transform 0.15s ease;
+}
+
+.tarjeta-equipo:hover {
+    transform: translateY(-3px);
+}
+
+.tarjeta-equipo__escudo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    margin: 0 auto 0.75rem;
+}
+
+.tarjeta-equipo h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1rem;
+}
+
+.tarjeta-equipo__dato {
+    margin: 0.15rem 0;
+    font-size: 0.82rem;
+    color: var(--color-texto-suave);
+}
+
+/* ---------- Seccion de coleccion ---------- */
+.seccion-coleccion h2 {
+    margin-bottom: 1rem;
+}
+
+.lista-favoritos {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.favorito {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: var(--color-superficie);
+    border: 1px solid var(--color-borde);
+    border-radius: var(--radio);
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+}
+
+.favorito__escudo {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.favorito__info {
+    flex: 1 1 180px;
+}
+
+.favorito__info h4 {
+    margin: 0 0 0.2rem;
+}
+
+.favorito__nota {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+}
+
+/* Selector de calificacion con estrellas (icono "star" de Lucide),
+   se usa tanto en la fila de favoritos como en el formulario del modal. */
+.selector-estrellas {
+    display: flex;
+    gap: 0.15rem;
+}
+
+.selector-estrellas__boton {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.15rem;
+    color: var(--color-texto-suave);
+}
+
+.selector-estrellas__boton svg {
+    width: 18px;
+    height: 18px;
+}
+
+.selector-estrellas__boton.activa {
+    color: #f2b705;
+}
+
+.selector-estrellas__boton.activa svg {
+    fill: currentColor;
+}
+
+.favorito__acciones {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* ---------- Toasts ---------- */
+.toast-contenedor {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 2000;
+}
+
+.toast {
+    padding: 0.75rem 1.1rem;
+    border-radius: var(--radio);
+    color: #fff;
+    box-shadow: var(--sombra);
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast--exito {
+    background-color: var(--color-exito);
+}
+
+.toast--error {
+    background-color: var(--color-error);
+}
+
+.toast--saliendo {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+/* ---------- Modal ---------- */
+.modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1500;
+    padding: 1rem;
+}
+
+.modal__fondo {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal__contenido {
+    position: relative;
+    background-color: var(--color-superficie);
+    border-radius: var(--radio);
+    padding: 1.5rem;
+    max-width: 420px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--sombra);
+}
+
+.modal__cerrar {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-texto-suave);
+}
+
+.modal__cerrar svg {
+    width: 18px;
+    height: 18px;
+}
+
+.modal__escudo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin: 0.5rem auto 1rem;
+}
+
+.modal__detalles {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    color: var(--color-texto-suave);
+}
+
+.modal__detalles li {
+    padding: 0.2rem 0;
+}
+
+.modal__descripcion {
+    font-size: 0.88rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.modal__aviso {
+    font-size: 0.88rem;
+    color: var(--color-primario);
+    font-weight: 600;
+}
+
+/* ---------- Formulario de favorito (crear/editar) ---------- */
+.form-favorito {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-favorito label,
+.form-favorito__grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.form-favorito label,
+.form-favorito__etiqueta {
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+}
+
+.form-favorito textarea {
+    padding: 0.5rem;
+    border-radius: var(--radio);
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: inherit;
+    resize: vertical;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 600px) {
+    .cabecera {
+        flex-wrap: wrap;
+    }
+
+    .contenedor {
+        padding: 1rem;
+    }
+
+    .grilla-equipos {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .favorito {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

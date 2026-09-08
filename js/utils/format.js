@@ -15,7 +15,7 @@ export function formatearAnio(anio) {
 }
 
 // Funcion que recorta una descripcion larga para que no rompa el layout del modal
-function truncarTexto(texto, maxCaracteres) {
+function truncarTexto(texto, maxCaracteres = 220) {
     const textoSeguro = formatearTexto(texto, "");
     if (!textoSeguro) return "Sin descripcion disponible.";
     if (textoSeguro.length <= maxCaracteres) return textoSeguro;

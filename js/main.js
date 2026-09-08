@@ -9,7 +9,7 @@ import {
     poblarFiltroLigas,
     renderFavoritos,
 } from "./ui/render.js";
-import { abrirModalDetalle, abrirModalEditarFavorito } from "./utils/modal.js";
+import { abrirModalDetalle, abrirModalEditarFavorito } from "./ui/modal.js";
 import { mostrarToastExito, mostrarToastError } from "./ui/toast.js";
 
 // Convertimos los emojis de lucide del HTML estatico en iconos SVG.
@@ -70,7 +70,7 @@ function manejarSeleccionEquipo(idTeam) {
 // El buscador filtra en tiempo real, pero con debounce para
 // no reenderizar en cada tecla presionada
 const buscarConDebounce = debounce(() => {
-    state.textoBusqueda = inputBusqueda?.value?? "";
+    state.textoBusqueda = inputBusqueda?.value ?? "";
     renderizarEquipos();
 }, 300);
 
@@ -91,12 +91,12 @@ async function cargarFavoritos() {
     }
 }
 
-async function agregarFavorito(equipo, datos) {
+async function agregarNuevoFavorito(equipo, datos) {
     try {
         const nuevoFavorito = await coleccionApi.agregarNuevoFavorito({
             idTeam: equipo.idTeam,
             strTeam: equipo.strTeam,
-            strBagde: equipo.strBagde,
+            strBadge: equipo.strBadge,
             strLeague: equipo.strLeague,
             nota: datos.nota,
             calificacion: datos.calificacion,
@@ -126,6 +126,17 @@ function manejarEditarFavorito(favorito) {
     });
 }
 
+async function manejarCambioCalificacionRapido(id, calificacion) {
+    try {
+        const actualizado = await coleccionApi.editarCalificacion(id, calificacion);
+        state.favoritos = state.favoritos.map((f) => (f.id === id ? actualizado : f));
+        renderFavoritos(state.favoritos, callbacksFavoritos);
+        mostrarToastExito("Calificación actualizada");
+    } catch (error) {
+        mostrarToastError(error.message);
+    }
+}
+
 async function manejarEliminarFavorito(favorito) {
     const confirmar = window.confirm(`¿Eliminar a ${favorito.strTeam} de tu colección?`);
     if (!confirmar) return;
@@ -140,14 +151,14 @@ async function manejarEliminarFavorito(favorito) {
     }
 }
 
-// Carga nicial
+// Carga inicial
 async function iniciar (){
     state.cargando = true;
     mostrarCargando(true);
     mostrarError(null);
 
     try {
-        state.equipo = await obtenerEquiposTop();
+        state.equipos = await obtenerEquiposTop();
 
         const ligas = [...new Set(state.equipos.map((e) => e.strLeague).filter(Boolean))].sort();
         poblarFiltroLigas(ligas);

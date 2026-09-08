@@ -1,8 +1,6 @@
 // El modal va a mostrar el detalle de un equipo y el formulario para crear o editar
 // un favorito
-import { createRef } from "react";
-import { formatearAnio, truncarTexto, farmatearTexto } from "./utils/format.js";
-import { formatearTexto } from "../utils/format.js";
+import { formatearAnio, truncarTexto, formatearTexto } from "../utils/format.js";
 
 // Guardamos los elementos del modal una sola vez
 const modal = document.querySelector("#modal-detalle");
@@ -26,22 +24,22 @@ document.addEventListener("keydown", (evento) => {
 // agrega el formulario para sumarlo a la coleccion y usa el POST
 export function abrirModalDetalle (equipo, yaEsFavorito, onAgregarFavorito) {
     if (!modal || !modalCuerpo) return;
-    modalCuerpo.innerHTML == "";
+    modalCuerpo.innerHTML = "";
 
     modalCuerpo.appendChild(crearTitulo(equipo.strTeam));
 
     const img = document.createElement("img");
-    img.className = "modal_escudo";
-    img.src = equipo.strBagde || "";
+    img.className = "modal__escudo";
+    img.src = equipo.strBadge || "";
     img.alt = `Escudo de ${equipo.strTeam}`;
     modalCuerpo.appendChild(img);
 
     const detalles = document.createElement("ul");
-    detalles.className = "modal_detalles";
+    detalles.className = "modal__detalles";
     [
         `Liga : ${formatearTexto(equipo.strLeague)}`,
         `País : ${formatearTexto(equipo.strCountry)}`,
-        `Estadio : ${formatearTexto(equipo, strStadium)}`,
+        `Estadio : ${formatearTexto(equipo.strStadium)}`,
         formatearAnio(equipo.intFormedYear),
     ].forEach((texto) => {
         const item = document.createElement("li");
@@ -51,7 +49,7 @@ export function abrirModalDetalle (equipo, yaEsFavorito, onAgregarFavorito) {
     modalCuerpo.appendChild(detalles);
 
     const descripcion = document.createElement("p");
-    descripcion.className = "modal_descripcion";
+    descripcion.className = "modal__descripcion";
     // Preferimos la descripcion en español, si el equipo no la tiene cargada
     // en la API, usamos la version en ingles como respaldo
     descripcion.textContent = truncarTexto(equipo.strDescriptionES || equipo.strDescriptionEN);
@@ -59,7 +57,7 @@ export function abrirModalDetalle (equipo, yaEsFavorito, onAgregarFavorito) {
 
     if (yaEsFavorito) {
         const aviso = document.createElement("p");
-        aviso.className = "modal_aviso";
+        aviso.className = "modal__aviso";
         aviso.textContent = "Este equipo ya está en tu colección.";
         modalCuerpo.appendChild(aviso);
     } else {
@@ -106,9 +104,9 @@ function crearFormularioFavorito (textoBoton, valoresIniciales, onEnviar) {
     form.appendChild(labelNota);
 
     const grupoCalificacion = document.createElement("div");
-    grupoCalificacion.className = "form-favorito_grupo";
+    grupoCalificacion.className = "form-favorito__grupo";
     const etiquetaCalificacion = document.createElement("span");
-    etiquetaCalificacion.className = "form-favorito_etiqueta";
+    etiquetaCalificacion.className = "form-favorito__etiqueta";
     etiquetaCalificacion.textContent = "Calificación";
     grupoCalificacion.appendChild(etiquetaCalificacion);
     const calificacion = crearSelectorEstrellas(valoresIniciales.calificacion);
@@ -147,9 +145,9 @@ function crearSelectorEstrellas(valorInicial) {
     for (let valor = 1; valor <= 5; valor++) {
         const boton = document.createElement("button");
         boton.type = "button";
-        boton.className = "selector-estrellas_boton";
+        boton.className = "selector-estrellas__boton";
         boton.setAttribute("aria-label", `${valor} estrella${valor > 1 ? "s" : ""}`);
-        boton.innerHTML = 'i data-lucide="star"></i>';
+        boton.innerHTML = '<i data-lucide="star"></i>';
         boton.addEventListener("click", () => {
             calificacionSeleccionada = valor;
             botones.forEach((b, i) => b.classList.toggle("activa", i < valor));

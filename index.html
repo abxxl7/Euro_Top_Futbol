@@ -7,7 +7,72 @@
     <link rel= "stylesheet" href="./style.css">
 </head>
 <body>
-    
+
+    <header class="cabecera">
+        <div class="cabecera__marca">
+            <h1><i data-lucide="goal" class="icono-marca" aria-hidden="true"></i> Euro Top Fútbol</h1>
+            <p>Los equipos de las 5 grandes ligas de Europa</p>
+        </div>
+        <button id="btn-modo-oscuro" class="boton boton--icono" type="button" aria-label="Cambiar tema">
+            <i data-lucide="moon" class="icono-modo icono-modo--luna"></i>
+            <i data-lucide="sun" class="icono-modo icono-modo--sol oculto"></i>
+        </button>
+    </header>
+
+    <main class="contenedor">
+
+        <!-- Buscador y filtro por liga -->
+        <section class="controles" aria-label="Buscar y filtrar equipos">
+            <input
+                type="search"
+                id="input-busqueda"
+                class="input-busqueda"
+                placeholder="Buscar equipo por nombre..."
+                aria-label="Buscar equipo"
+            >
+            <select id="select-liga" class="select-liga" aria-label="Filtrar por liga">
+                <option value="Todas">Todas las ligas</option>
+            </select>
+        </section>
+
+        <!-- Estado de carga: spinner que se muestra/oculta segun la peticion -->
+        <section id="estado-carga" class="estado-carga oculto" aria-live="polite">
+            <div class="spinner"></div>
+            <p>Cargando equipos...</p>
+        </section>
+
+        <!-- Estado de error: se llena con el mensaje que devuelve client.js -->
+        <section id="estado-error" class="estado-error oculto" role="alert"></section>
+
+        <!-- Estado vacio: cuando la busqueda o el filtro no encuentran nada -->
+        <p id="estado-vacio" class="estado-vacio oculto">No se encontraron equipos con esos filtros.</p>
+
+        <!-- Grilla principal de tarjetas de equipos -->
+        <section id="grilla-equipos" class="grilla-equipos" aria-live="polite"></section>
+
+        <!-- Coleccion personal de equipos favoritos (CRUD contra json-server) -->
+        <section class="seccion-coleccion">
+            <h2>Mi colección de favoritos</h2>
+            <p id="coleccion-vacio" class="estado-vacio oculto">Todavía no agregaste equipos a tu colección.</p>
+            <div id="lista-favoritos" class="lista-favoritos"></div>
+        </section>
+
+    </main>
+
+    <!-- Contenedor de notificaciones temporales -->
+    <div id="toast-contenedor" class="toast-contenedor" aria-live="assertive"></div>
+
+    <!-- Modal de detalle / formulario de favorito -->
+    <div id="modal-detalle" class="modal oculto">
+        <div class="modal__fondo" id="modal-fondo"></div>
+        <div class="modal__contenido" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+            <button id="modal-cerrar" class="modal__cerrar" type="button" aria-label="Cerrar"><i data-lucide="x"></i></button>
+            <div id="modal-cuerpo" class="modal__cuerpo"></div>
+        </div>
+    </div>
+
+    <!-- Lucide: solo se usa para los iconos, es una libreria de iconos permitida por la consigna -->
+    <script src="https://unpkg.com/lucide@1.41.0/dist/umd/lucide.js"></script>
     <script type="module" src="./js/main.js"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 export const state = {
     textoBusqueda: "",
     equipos: [],
+    favoritos: [],
     cargando: false,
     errorCarga: null,
     filtroPorLigas: "Todas"
